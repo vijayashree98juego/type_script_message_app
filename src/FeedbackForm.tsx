@@ -1,22 +1,24 @@
 import React  from 'react';
 import SuccessMessage from './components/SuccessMessage'
+import {formProps} from './form.type'
 
-function FeedbackForm(props) {
 
-    function onChangeHandler(){
-
-        props.setDisplay(true);
-        props.setComponent(SuccessMessage({setDisplay:props.setDisplay}))
+function FeedbackForm({setShowPopUp,setComponent=function(){}}:formProps) {
+    function onSubmitHandler(e:React.FormEvent<HTMLElement>){
+        e.preventDefault();
+        setShowPopUp(true)
+        setComponent(SuccessMessage({setShowPopUp}))
     }
 
     return (
         <div>
-            
-            <label>email</label><input type="text" />
-            <label>user name</label><input type="text"/>
-            <label>password</label><input type="password"/>
-            <input type="submit" onClick={onChangeHandler}/>
-        </div>
+        <form onSubmit={(e)=>{onSubmitHandler(e);}}>
+            <label>email</label><input type="email" name="email" id="email"/>
+            <label>user name</label><input type="text" name="user_name" id="user_name"/>
+            <label>password</label><input type="password" name="password" id="password"/>
+            <input type="submit" name ="submit" />     
+            </form>
+            </div>
     );
 }
 
